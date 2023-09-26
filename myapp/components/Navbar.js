@@ -8,9 +8,9 @@ const Navbar = () => {
     const {data: session} = useSession()
 
   return (
-    <header className="flex justify-between">
-           <div >
-      <div >
+    <header className="flex bg-red-900 justify-between py-12">
+           <div className='flex'>
+      <div className='flex justify-between w-[1200px] px-6'>
         <h2 >
           <Link href="/">PimpTheRide</Link>
         </h2>
