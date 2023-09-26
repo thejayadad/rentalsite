@@ -8,18 +8,18 @@ const Navbar = () => {
     const {data: session} = useSession()
 
   return (
-    <header>
+    <header className="flex justify-between">
            <div >
       <div >
         <h2 >
-          <Link href="/">WebDevMania</Link>
+          <Link href="/">PimpTheRide</Link>
         </h2>
         <ul >
           {
             session?.user
               ? (
                 <div>
-                  {showDropdown && (
+                  { (
                     <div >
                       <button onClick={() => {signOut()}} >Logout</button>
                       <Link href='/create' >Create</Link>
