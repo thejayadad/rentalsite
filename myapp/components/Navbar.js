@@ -9,7 +9,34 @@ const Navbar = () => {
 
   return (
     <header>
-        Navbar
+           <div >
+      <div >
+        <h2 >
+          <Link href="/">WebDevMania</Link>
+        </h2>
+        <ul >
+          {
+            session?.user
+              ? (
+                <div>
+                  {showDropdown && (
+                    <div >
+                      <button onClick={() => {signOut()}} >Logout</button>
+                      <Link href='/create' >Create</Link>
+                    </div>
+                  )}
+                </div>
+              )
+              : (
+                <>
+                  <button onClick={() => {signIn()}} >Log in</button>
+                  <Link href='/register'>Register</Link>
+                </>
+              )
+          }
+        </ul>
+      </div>
+    </div>
     </header>
   )
 }
