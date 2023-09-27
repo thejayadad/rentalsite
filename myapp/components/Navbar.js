@@ -8,21 +8,37 @@ const Navbar = () => {
     const {data: session} = useSession()
 
   return (
-    <header className="flex bg-red-900 justify-between py-12">
-           <div className='flex'>
-      <div className='flex justify-between w-[1200px] px-6'>
+    <header className="flex py-12">
+      <div className='flex justify-between w-full items-center bg-white px-4'>
         <h2 >
-          <Link href="/">PimpTheRide</Link>
+
+        <Link href="/">
+        <span className="text-2xl font-bold text-indigo-500 hover:text-indigo-700">
+          Pimp<span className="text-pink-500">The</span>Ride
+        </span>
+      </Link>
         </h2>
-        <ul >
+        <div>
+        <ul className=''>
           {
             session?.user
               ? (
                 <div>
                   { (
-                    <div >
-                      <button onClick={() => {signOut()}} >Logout</button>
-                      <Link href='/create' >Create</Link>
+                    <div>
+                  <button
+                      className="mr-4 px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-700"
+                      onClick={() => signOut()}
+                    >
+                      Logout
+                    </button>
+                    <Link
+                      className="mr-4 px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-700"
+                      href="/create"
+                    >
+                      Create
+                    </Link>
+
                     </div>
                   )}
                 </div>
@@ -35,8 +51,8 @@ const Navbar = () => {
               )
           }
         </ul>
+        </div>
       </div>
-    </div>
     </header>
   )
 }
