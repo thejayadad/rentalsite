@@ -6,6 +6,14 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { FaBluetooth, FaSun, FaMusic } from 'react-icons/fa';
+
+
+const availablePerks = [
+    { name: 'Bluetooth', icon: <FaBluetooth /> },
+    { name: 'Sunroof', icon: <FaSun /> },
+    { name: 'Music System', icon: <FaMusic /> },
+  ];
 
 
 const NewRide = () => {
@@ -19,6 +27,8 @@ const NewRide = () => {
   const [checkOut, setCheckOut] = useState('');
   const [seats, setSeats] = useState(1);
   const [price, setPrice] = useState(100);
+  const [selectedPerks, setSelectedPerks] = useState([]);
+
 
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -77,10 +87,10 @@ const NewRide = () => {
 
   return (
     <section className="bg-white p-4">
-        <span className="text-3xl font-bold text-indigo-500 hover:text-indigo-700 mb-4">
+        <span className="text-3xl font-bold text-indigo-500 hover:text-indigo-700 mb-4 cursor-pointer">
           New<span className="text-pink-500">Ride</span>
         </span>
-      <form onSubmit={handleSubmit}>
+      <form  onSubmit={handleSubmit}>
         {/* Title */}
         <div className="mb-4">
           <label htmlFor="title" className="block text-sm font-medium text-gray-700">
@@ -92,7 +102,7 @@ const NewRide = () => {
             name="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="border rounded-md px-3 py-2 w-full"
+            className="border rounded-md px-3 py-2 w-full cursor-pointer"
             required
           />
         </div>
@@ -161,20 +171,23 @@ const NewRide = () => {
 
         {/* Perks */}
         <div className="mb-4">
-          <label htmlFor="perks" className="block text-sm font-medium text-gray-700">
-            Perks (Comma-separated)
-          </label>
-          <input
-            type="text"
-            id="perks"
-            name="perks"
-            value={perks}
-            onChange={(e) => setPerks(e.target.value.split(','))}
-            className="border rounded-md px-3 py-2 w-full"
-            required
-          />
+        <label className="block text-sm font-medium text-gray-700">Perks</label>
+        <div className="flex flex-wrap">
+            {availablePerks.map((perk, index) => (
+            <label key={index} className="flex items-center mr-4 mb-2">
+                <input
+                type="checkbox"
+                value={perk.name}
+                checked={selectedPerks.includes(perk.name)}
+                onChange={(e) => handlePerkChange(e, perk.name)}
+                className="mr-2"
+                />
+                {perk.icon}
+                <span className="ml-1">{perk.name}</span>
+            </label>
+            ))}
         </div>
-
+        </div>
         {/* Extra Info */}
         <div className="mb-4">
           <label htmlFor="extraInfo" className="block text-sm font-medium text-gray-700">
