@@ -38,14 +38,7 @@ const Navbar = () => {
                     >
                       Logout
                     </button>
-                    <Link
-                      className="mr-4 px-2 py-1 bg-purple-500 text-white rounded-lg hover:bg-purple-700"
-                      href="/create"
-                    >
-                      Create
-                    </Link>
-
-                    </div>
+                   </div>
                   )}
                 </div>
               )
