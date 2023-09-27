@@ -26,14 +26,20 @@ const Navbar = () => {
                 <div>
                   { (
                     <div>
+                      <Link
+                      className='mr-4'
+                      href='/account'
+                      >
+                        Account
+                      </Link>
                   <button
-                      className="mr-4 px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-700"
+                      className="mr-4 px-2 py-1 bg-indigo-500 text-white rounded-lg hover:bg-indigo-700"
                       onClick={() => signOut()}
                     >
                       Logout
                     </button>
                     <Link
-                      className="mr-4 px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-700"
+                      className="mr-4 px-2 py-1 bg-purple-500 text-white rounded-lg hover:bg-purple-700"
                       href="/create"
                     >
                       Create
@@ -45,8 +51,12 @@ const Navbar = () => {
               )
               : (
                 <>
-                  <button onClick={() => {signIn()}} >Log in</button>
-                  <Link href='/register'>Register</Link>
+                  <button
+                  className="mr-4 px-2 py-1 bg-purple-500 text-white rounded-lg hover:bg-purple-700"
+                  onClick={() => {signIn()}} >Log in</button>
+                  <Link
+                  className="mr-4 px-2 py-1 bg-indigo-500 text-white rounded-lg hover:bg-indigo-700"
+                  href='/register'>Register</Link>
                 </>
               )
           }
