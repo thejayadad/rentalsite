@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const CarSchema = new mongoose.Schema({
+const RideSchema = new mongoose.Schema({
     owner: {type:mongoose.Schema.Types.ObjectId, ref:'User'},
     title: {
         type: String,
@@ -11,7 +11,7 @@ const CarSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    description: {
+    desc: {
         type: String,
         required: true,
    },
@@ -19,6 +19,17 @@ const CarSchema = new mongoose.Schema({
     type: [String],
     required: true,
    },
+   category: {
+    type: String,
+    required: true,
+    enum: [
+        'Suv',
+        'Sports',
+        'Luxury',
+        'Sedan',
+        'Electric',
+    ]
+},
    extraInfo: String,
    checkIn: Number,
    checkOut: Number,
@@ -28,4 +39,4 @@ const CarSchema = new mongoose.Schema({
 
 
 
-export default mongoose?.models?.Car || mongoose.model("Car", CarSchema)
+export default mongoose?.models?.Ride || mongoose.model("Ride", RideSchema)
