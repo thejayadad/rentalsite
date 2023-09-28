@@ -19,15 +19,13 @@ const availablePerks = [
 const NewRide = () => {
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('Suv');
   const [photo, setPhoto] = useState('');
-  const [perks, setPerks] = useState('');
   const [extraInfo, setExtraInfo] = useState('');
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
   const [seats, setSeats] = useState(1);
   const [price, setPrice] = useState(100);
-  const [selectedPerks, setSelectedPerks] = useState([]);
 
 
   const { data: session, status } = useSession();
@@ -35,40 +33,29 @@ const NewRide = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const rideData = {
-      title,
-      description: desc,
-      category,
-      photo,
-      perks,
-      extraInfo,
-      checkIn,
-      checkOut,
-      seats,
-      price,
-    };
-
     try {
-      const response = await fetch('/api/ride', {
-        method: 'POST',
+      const response = await fetch('http://localhost:3000/api/ride', {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${session?.user?.accessToken}`,
         },
-        body: JSON.stringify(rideData),
+        method: 'POST',
+        body: JSON.stringify({title, desc, category, photo, extraInfo, checkIn, checkOut, seats, price, owner: session?.user?.email}),
       });
-
-      if (response.ok) {
-        toast.success('Ride created successfully!');
-        router.push('/');
-      } else {
-        toast.error('Failed to create the ride.');
+      if(!response.ok){
+        throw new Error("Error occured")
       }
-    } catch (error) {
+
+      const ride = await response.json()
+      router.push("/")
+
+       } catch (error) {
       console.error('Error creating the ride:', error);
     }
   };
+
+
+
   const handlePhotoChange = (e) => {
     setPhoto(e.target.value);
   };
@@ -85,6 +72,9 @@ const NewRide = () => {
     );
   }
 
+
+
+
   return (
     <section className="bg-white p-4">
         <span className="text-3xl font-bold text-indigo-500 hover:text-indigo-700 mb-4 cursor-pointer">
@@ -100,7 +90,6 @@ const NewRide = () => {
             type="text"
             id="title"
             name="title"
-            value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="border rounded-md px-3 py-2 w-full cursor-pointer"
             required
@@ -115,7 +104,6 @@ const NewRide = () => {
           <textarea
             id="desc"
             name="desc"
-            value={desc}
             onChange={(e) => setDesc(e.target.value)}
             className="border rounded-md px-3 py-2 w-full h-24"
             required
@@ -170,24 +158,7 @@ const NewRide = () => {
         </div>
 
         {/* Perks */}
-        <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700">Perks</label>
-        <div className="flex flex-wrap">
-            {availablePerks.map((perk, index) => (
-            <label key={index} className="flex items-center mr-4 mb-2">
-                <input
-                type="checkbox"
-                value={perk.name}
-                checked={selectedPerks.includes(perk.name)}
-                onChange={(e) => handlePerkChange(e, perk.name)}
-                className="mr-2"
-                />
-                {perk.icon}
-                <span className="ml-1">{perk.name}</span>
-            </label>
-            ))}
-        </div>
-        </div>
+
         {/* Extra Info */}
         <div className="mb-4">
           <label htmlFor="extraInfo" className="block text-sm font-medium text-gray-700">
@@ -196,7 +167,6 @@ const NewRide = () => {
           <textarea
             id="extraInfo"
             name="extraInfo"
-            value={extraInfo}
             onChange={(e) => setExtraInfo(e.target.value)}
             className="border rounded-md px-3 py-2 w-full h-24"
           />
@@ -205,7 +175,7 @@ const NewRide = () => {
         {/* Check-In */}
         <div className="mb-4">
         <label htmlFor="checkIn" className="block text-sm font-medium text-gray-700">
-            Check-In
+            Pick-Up
         </label>
         <DatePicker
             selected={checkIn}
@@ -219,7 +189,7 @@ const NewRide = () => {
         {/* Check-Out */}
         <div className="mb-4">
         <label htmlFor="checkOut" className="block text-sm font-medium text-gray-700">
-            Check-Out
+            Drop-Off
         </label>
         <DatePicker
             selected={checkOut}
@@ -238,7 +208,6 @@ const NewRide = () => {
             type="number"
             id="seats"
             name="seats"
-            value={seats}
             onChange={(e) => setSeats(parseInt(e.target.value))}
             className="border rounded-md px-3 py-2 w-full"
           />
@@ -253,7 +222,6 @@ const NewRide = () => {
             type="number"
             id="price"
             name="price"
-            value={price}
             onChange={(e) => setPrice(parseInt(e.target.value))}
             className="border rounded-md px-3 py-2 w-full"
           />

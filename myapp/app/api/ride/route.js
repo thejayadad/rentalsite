@@ -20,7 +20,7 @@ export async function POST(req) {
     const token = accessToken.split(' ')[1]
 
     const decodedToken = verifyJwtToken(token)
-
+    
     if (!accessToken || !decodedToken) {
         return new Response(JSON.stringify({ error: "unauthorized (wrong or expired token)" }), { status: 403 })
     }

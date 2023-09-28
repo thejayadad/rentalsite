@@ -1,27 +1,21 @@
 import mongoose from "mongoose";
 
 const RideSchema = new mongoose.Schema({
-    owner: {type:mongoose.Schema.Types.ObjectId, ref:'User'},
+    owner: {type: String, required: true},
     title: {
         type: String,
-        required: true,
-        unique: true
     },
     photo: {
         type: String,
-        required: true,
     },
     desc: {
         type: String,
-        required: true,
    },
-   perks: {
-    type: [String],
-    required: true,
-   },
+//    perks: {
+//     type: [String],
+//    },
    category: {
     type: String,
-    required: true,
     enum: [
         'Suv',
         'Sports',

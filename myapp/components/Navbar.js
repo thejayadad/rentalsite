@@ -1,7 +1,6 @@
 'use client'
 import Link from 'next/link'
 import React, { useState } from 'react'
-import { AiOutlineClose } from 'react-icons/ai'
 import {signIn, signOut, useSession} from 'next-auth/react'
 
 const Navbar = () => {
@@ -44,9 +43,10 @@ const Navbar = () => {
               )
               : (
                 <>
-                  <button
+                  <Link
+                  href="/login"
                   className="mr-4 px-2 py-1 bg-purple-500 text-white rounded-lg hover:bg-purple-700"
-                  onClick={() => {signIn()}} >Log in</button>
+                  >Log in</Link>
                   <Link
                   className="mr-4 px-2 py-1 bg-indigo-500 text-white rounded-lg hover:bg-indigo-700"
                   href='/register'>Register</Link>
